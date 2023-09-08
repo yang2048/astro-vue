@@ -1,0 +1,44 @@
+---
+// Component Imports
+import '@arco-design/web-vue/dist/arco.css';
+import Counter from '../components/Counter.vue';
+
+const personResponse = await fetch('https://randomuser.me/api/');
+const personData = await personResponse.json();
+const randomUser = personData.results[0];
+const randomInfo = personData.info;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      html,
+      body {
+        font-family: system-ui;
+        margin: 0;
+      }
+      body {
+        padding: 2rem;
+      }
+      main {
+        margin: auto;
+        padding: 1rem;
+        width: 800px;
+        max-width: calc(100% - 2rem);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <Counter client:visible>
+        <h1>{randomInfo?.seed}</h1>
+        <h2>{randomUser?.email}</h2>
+        <img src={`${randomUser?.picture.large}`}"></img>
+      </Counter>
+    </main>
+  </body>
+</html>
